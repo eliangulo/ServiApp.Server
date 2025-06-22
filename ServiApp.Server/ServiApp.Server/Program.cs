@@ -1,13 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using ServiApp.BD.Datos;
 using ServiApp.Server.Client.Pages;
 using ServiApp.Server.Components;
 
+//configura el constructor del server y lo guardara en "builder"
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("ConnSqlServer")
+?? throw new InvalidOperationException
+    ("El string de conexion no exsiste.");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+//construimos nuestra aplicacion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
