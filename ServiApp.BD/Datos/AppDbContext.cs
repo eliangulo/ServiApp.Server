@@ -18,9 +18,11 @@ namespace ServiApp.BD.Datos
         public DbSet<Solicitud> Solicitudes { get; set; }
         public DbSet<Servico> Servicos{ get; set; }
         public DbSet<Prestador> Prestadores { get; set; }
+        public DbSet<Presupuesto> Presupuesto { get; set; }
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Calificacion> Calificacion { get; set; }
         public DbSet<PrestadorServicio> PrestadorServicio { get; set; }
+        public DbSet<Categoria> categorias { get; set; }
 
 
         public AppDbContext(DbContextOptions options) : base(options)

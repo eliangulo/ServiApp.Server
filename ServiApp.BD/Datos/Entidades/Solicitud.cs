@@ -12,15 +12,12 @@ namespace ServiApp.BD.Datos.Entidades
         //FK
         public required int IdUsaurio { get; set; }
         public Usuarios? Usuarios { get; set; }
-        public required int IdPrestador { get; set; }
-        public Prestador? Prestador { get; set; }
+
         public required int IdServico { get; set; }
         public Servico? Servicio { get; set; }
 
-        public required int IDSolicitud { get; set; }
-        [Required(ErrorMessage = "El codigo es obligatorio")]
-        [MaxLength(4, ErrorMessage = "El campo tiene como máximo {4} caracteres.")]
-      
+        public required int IDSolicitud { get; set; } //PK
+       
         public required string descripcion { get; set; }
         [MaxLength(100, ErrorMessage = "El campo tiene como máximo {100} caracteres.")]
         public required bool Estado { get; set; }

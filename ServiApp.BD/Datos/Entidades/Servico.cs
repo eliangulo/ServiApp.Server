@@ -19,11 +19,11 @@ namespace ServiApp.BD.Datos.Entidades
         [Required(ErrorMessage = "El campo Descripcion es obligatorio")]
         [MaxLength(100, ErrorMessage = "El campo tiene como máximo 100 caracteres.")]
 
-        public required string Categoria { get; set; }
-        [Required(ErrorMessage = "El campo Categoria es obligatorio")]
-        [MaxLength(20, ErrorMessage = "El campo tiene como máximo 20 caracteres.")]
-
         public required int FechaRegistro { get; set; }
+
+        //fk
         
+        public required int IdCategoria { get; set; }
+        public Categoria? Categoria { get; set; }
     }
 }

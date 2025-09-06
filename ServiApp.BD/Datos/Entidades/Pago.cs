@@ -19,6 +19,11 @@ namespace ServiApp.BD.Datos.Entidades
         [MaxLength(42, ErrorMessage = "El campo tiene como máximo 42 caracteres.")]
         public required bool Estado { get; set; } //aprobado-pendiente-rechado
         public required DateTime FechaPago { get; set; }
+        //FK
+        public required int IDnumeroMatricula { get; set; }
+        public Prestador? Prestador { get; set; }
+        public required int IDdUsuario{ get; set; }
+        public Usuarios? Usuarios { get; set; }
 
     }
 }
