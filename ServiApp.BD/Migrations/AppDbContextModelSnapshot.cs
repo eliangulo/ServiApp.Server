@@ -17,7 +17,7 @@ namespace ServiApp.BD.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -77,23 +77,50 @@ namespace ServiApp.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EstadoRegistro")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdCategoria")
-                        .HasColumnType("int");
-
-                    b.Property<string>("descripcion")
+                    b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nombre_categoria")
+                    b.Property<int>("EstadoRegistro")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreCategoria")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("categorias");
+                    b.ToTable("Categorias");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Servicios de cañerías y grifos",
+                            EstadoRegistro = 0,
+                            NombreCategoria = "Plomería"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Instalaciones y reparaciones eléctricas",
+                            EstadoRegistro = 0,
+                            NombreCategoria = "Electricidad"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Pintado de interiores y exteriores",
+                            EstadoRegistro = 0,
+                            NombreCategoria = "Pintura"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descripcion = "Servicios de limpieza para el hogar y oficina",
+                            EstadoRegistro = 0,
+                            NombreCategoria = "Limpieza"
+                        });
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Pago", b =>
@@ -265,16 +292,13 @@ namespace ServiApp.BD.Migrations
                     b.ToTable("Presupuesto");
                 });
 
-            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servico", b =>
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CategoriaId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -300,7 +324,7 @@ namespace ServiApp.BD.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId");
+                    b.HasIndex("IdCategoria");
 
                     b.ToTable("Servicos");
                 });
@@ -429,7 +453,7 @@ namespace ServiApp.BD.Migrations
                         .WithMany()
                         .HasForeignKey("PrestadorId");
 
-                    b.HasOne("ServiApp.BD.Datos.Entidades.Servico", "Servicio")
+                    b.HasOne("ServiApp.BD.Datos.Entidades.Servicio", "Servicio")
                         .WithMany()
                         .HasForeignKey("ServicioId");
 
@@ -447,18 +471,20 @@ namespace ServiApp.BD.Migrations
                     b.Navigation("Prestador");
                 });
 
-            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servico", b =>
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
                 {
                     b.HasOne("ServiApp.BD.Datos.Entidades.Categoria", "Categoria")
-                        .WithMany()
-                        .HasForeignKey("CategoriaId");
+                        .WithMany("Servicios")
+                        .HasForeignKey("IdCategoria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Solicitud", b =>
                 {
-                    b.HasOne("ServiApp.BD.Datos.Entidades.Servico", "Servicio")
+                    b.HasOne("ServiApp.BD.Datos.Entidades.Servicio", "Servicio")
                         .WithMany()
                         .HasForeignKey("ServicioId");
 
@@ -469,6 +495,11 @@ namespace ServiApp.BD.Migrations
                     b.Navigation("Servicio");
 
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Categoria", b =>
+                {
+                    b.Navigation("Servicios");
                 });
 #pragma warning restore 612, 618
         }

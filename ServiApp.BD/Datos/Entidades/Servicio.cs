@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServiApp.BD.Datos.Entidades
 {
-    public class Servico : EntityBase
+    public class Servicio : EntityBase
     {
         public required int IDServicio { get; set; }
         
@@ -20,7 +20,7 @@ namespace ServiApp.BD.Datos.Entidades
         [MaxLength(100, ErrorMessage = "El campo tiene como máximo 100 caracteres.")]
 
         public required int FechaRegistro { get; set; }
-
+       
         //fk
         
         public required int IdCategoria { get; set; }

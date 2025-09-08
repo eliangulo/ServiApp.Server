@@ -134,7 +134,7 @@ namespace ServiApp.BD.Migrations
                     b.ToTable("Prestadores");
                 });
 
-            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servico", b =>
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +280,7 @@ namespace ServiApp.BD.Migrations
                         .WithMany()
                         .HasForeignKey("PrestadorId");
 
-                    b.HasOne("ServiApp.BD.Datos.Entidades.Servico", "Servicio")
+                    b.HasOne("ServiApp.BD.Datos.Entidades.Servicio", "Servicio")
                         .WithMany()
                         .HasForeignKey("ServicioId");
 

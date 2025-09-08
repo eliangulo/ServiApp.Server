@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace ServiApp.BD.Datos.Entidades
 {    public class Categoria : EntityBase
     {
-        public required int IdCategoria { get; set; }
-        public required string nombre_categoria { get; set; }
+        
+        public required string NombreCategoria { get; set; }
         [Required(ErrorMessage = "El campo nombre categoria es obligatorio")]
-       
-        public required string descripcion { get; set; }
+        public required string Descripcion { get; set; }
+        public ICollection<Servicio> Servicios { get; set; } = new List<Servicio>();
        
     }
 

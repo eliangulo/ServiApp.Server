@@ -5,6 +5,10 @@ using ServiApp.Server.Components;
 
 //configura el constructor del server y lo guardara en "builder"
 var builder = WebApplication.CreateBuilder(args);
+//region configura el Constructor de la aplicacion y sus servicios
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("ConnSqlServer")
 ?? throw new InvalidOperationException
@@ -23,6 +27,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -41,5 +47,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(ServiApp.Server.Client._Imports).Assembly);
+
+app.MapControllers();
 
 app.Run();
