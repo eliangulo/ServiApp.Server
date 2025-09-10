@@ -34,13 +34,12 @@ namespace ServiApp.BD.Datos
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relación: una Categoría tiene muchos Servicios
             modelBuilder.Entity<Servicio>()
                 .HasOne(s => s.Categoria)
                 .WithMany(c => c.Servicios)
                 .HasForeignKey(s => s.IdCategoria);
 
-            // Precargar categorías (seeding)
+            // Precargar categorías
             modelBuilder.Entity<Categoria>().HasData(
                 new Categoria { Id = 1, NombreCategoria = "Plomería", Descripcion = "Servicios de cañerías y grifos" },
                 new Categoria { Id = 2, NombreCategoria = "Electricidad", Descripcion = "Instalaciones y reparaciones eléctricas" },

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ServiApp.BD.Datos
 {
-    public class EntityBase
+    public class EntityBase : IEntityBase
     {
         public required int Id { get; set; }
-        public EstadoRegistro EstadoRegistro { get; set; }
+       // public EstadoRegistro EstadoRegistro { get; set; }
     }
 
 }
