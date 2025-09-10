@@ -13,7 +13,7 @@ namespace ServiApp.BD.Datos.Entidades
         public required int IdUsaurio { get; set; }
         public Usuarios? Usuarios { get; set; }
 
-        public required int IdServico { get; set; }
+        public required int IdServicio { get; set; }
         public Servicio? Servicio { get; set; }
 
         public required int IDSolicitud { get; set; } //PK

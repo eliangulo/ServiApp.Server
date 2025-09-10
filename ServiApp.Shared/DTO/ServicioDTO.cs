@@ -11,6 +11,9 @@ namespace ServiApp.Shared.DTO
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public int FechaRegistro { get; set; }
+        public string NombrePrestador { get; set; }
+        public string Ubicacion { get; set; }
+        public decimal PrecioBase { get; set; }
+
     }
 }

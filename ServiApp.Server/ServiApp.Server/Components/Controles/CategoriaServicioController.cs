@@ -54,7 +54,7 @@ namespace ServiApp.Server.Components.Controles
                     Id = s.Id,
                     Nombre = s.Nombre,
                     Descripcion = s.Descripcion,
-                    FechaRegistro = s.FechaRegistro
+                    
                 }).ToList()
             };
 

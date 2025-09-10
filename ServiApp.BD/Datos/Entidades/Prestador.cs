@@ -10,7 +10,7 @@ namespace ServiApp.BD.Datos.Entidades
     public class Prestador :EntityBase
     {
         public required int IDnumberoMatricula { get; set; }
-        public required string Nombre { get; set; }
+        public required string NombrePrestador { get; set; }
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(20, ErrorMessage = "El campo tiene como máximo 20 caracteres.")]
         public required string Apellido { get; set; }

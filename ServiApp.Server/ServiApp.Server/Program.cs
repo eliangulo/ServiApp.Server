@@ -3,25 +3,33 @@ using ServiApp.BD.Datos;
 using ServiApp.Server.Client.Pages;
 using ServiApp.Server.Components;
 
-//configura el constructor del server y lo guardara en "builder"
+// Configura el constructor del server y lo guardará en "builder"
 var builder = WebApplication.CreateBuilder(args);
-//region configura el Constructor de la aplicacion y sus servicios
 
+//region configura el Constructor de la aplicacion y sus servicios
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("ConnSqlServer")
-?? throw new InvalidOperationException
-    ("El string de conexion no exsiste.");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+    ?? throw new InvalidOperationException("El string de conexion no existe.");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-//construimos nuestra aplicacion
+// Construimos nuestra aplicación
 var app = builder.Build();
+
+// Aplicar migraciones automáticamente al iniciar la aplicación
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // Aplica todas las migraciones pendientes
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -33,13 +41,10 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
-
 app.UseAntiforgery();
 
 app.MapStaticAssets();

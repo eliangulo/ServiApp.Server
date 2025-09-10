@@ -63,7 +63,7 @@ namespace ServiApp.BD.Migrations
 
                     b.HasIndex("UsuariosId");
 
-                    b.ToTable("Calificacion");
+                    b.ToTable("Calificaciones");
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Categoria", b =>
@@ -184,7 +184,7 @@ namespace ServiApp.BD.Migrations
                     b.Property<int>("IDnumberoMatricula")
                         .HasColumnType("int");
 
-                    b.Property<string>("Nombre")
+                    b.Property<string>("NombrePrestador")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -224,7 +224,7 @@ namespace ServiApp.BD.Migrations
 
                     b.HasIndex("ServicioId");
 
-                    b.ToTable("PrestadorServicio");
+                    b.ToTable("PrestadoresServicios");
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Presupuesto", b =>
@@ -267,7 +267,7 @@ namespace ServiApp.BD.Migrations
 
                     b.HasIndex("PrestadorId");
 
-                    b.ToTable("Presupuesto");
+                    b.ToTable("Presupuestos");
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
@@ -280,15 +280,8 @@ namespace ServiApp.BD.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("FechaRegistro")
-                        .HasMaxLength(100)
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDServicio")
-                        .HasColumnType("int");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("IdCategoria")
                         .HasColumnType("int");
@@ -297,11 +290,46 @@ namespace ServiApp.BD.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NombrePrestador")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("PrecioBase")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Ubicacion")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdCategoria");
 
-                    b.ToTable("Servicos");
+                    b.ToTable("Servicios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Arreglo de pérdidas de agua y caños rotos",
+                            IdCategoria = 1,
+                            Nombre = "Reparación de caños",
+                            NombrePrestador = "Carlos López",
+                            PrecioBase = 10m,
+                            Ubicacion = "Buenos Aires"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Colocación y reparación de enchufes eléctricos",
+                            IdCategoria = 2,
+                            Nombre = "Instalación de enchufes",
+                            NombrePrestador = "María Fernández",
+                            PrecioBase = 20m,
+                            Ubicacion = "Rosario"
+                        });
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Solicitud", b =>
@@ -322,7 +350,7 @@ namespace ServiApp.BD.Migrations
                     b.Property<int>("IDSolicitud")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdServico")
+                    b.Property<int>("IdServicio")
                         .HasColumnType("int");
 
                     b.Property<int>("IdUsaurio")
