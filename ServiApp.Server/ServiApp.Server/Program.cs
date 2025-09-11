@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ServiApp.BD.Datos;
+using ServiApp.BD.Datos.Entidades;
+using ServiApp.Repositorio.Repositorio;
 using ServiApp.Server.Client.Pages;
 using ServiApp.Server.Components;
 
@@ -15,6 +17,11 @@ var connectionString = builder.Configuration.GetConnectionString("ConnSqlServer"
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
+//inyectamos el servicio generico
+builder.Services.AddScoped<IServicioRepo<Servicio>, ServicioRepo<Servicio>>();//repoServicio
+builder.Services.AddScoped<ICategoriaRepo<Categoria>, CategoriaRepo<Categoria>>();//repoCategoria
+
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

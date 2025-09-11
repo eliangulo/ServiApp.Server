@@ -3,6 +3,7 @@ using ServiApp.BD.Datos;
 using ServiApp.Shared.DTO;
 using Microsoft.EntityFrameworkCore;
 using ServiApp.BD.Datos.Entidades;
+using ServiApp.Repositorio.Repositorio;
 
 namespace ServiApp.Server.Components.Controles
 {
@@ -12,17 +13,23 @@ namespace ServiApp.Server.Components.Controles
     public class ServicioController : ControllerBase
     {
         private readonly AppDbContext context;
+        private readonly IServicioRepo<Servicio> servicioRepo;
 
-        public ServicioController(AppDbContext context)
+        public ServicioController(AppDbContext context,
+                                 IServicioRepo<Servicio> servicioRepo)
         {
             this.context = context;
+            this.servicioRepo = servicioRepo;
         }
 
         // GET: api/servicio/categoria/3
-        [HttpGet("categoria/{IdCategoria}")]
+        [HttpGet("categoria/IdCategoria")]
         public async Task<ActionResult<IEnumerable<ServicioDTO>>> GetServiciosPorCategoria(int IdCategoria)
         {
-            var servicios = await context.Servicios
+            // Await the Task<List<Servicio>> before applying LINQ methods
+            var serviciosList = await servicioRepo.Select();
+
+            var servicios = serviciosList
                 .Where(s => s.IdCategoria == IdCategoria)
                 .Select(s => new ServicioDTO
                 {
@@ -33,7 +40,7 @@ namespace ServiApp.Server.Components.Controles
                     Ubicacion = s.Ubicacion,
                     PrecioBase = s.PrecioBase
                 })
-                .ToListAsync();
+                .ToList();
 
             if (!servicios.Any())
                 return NotFound($"No se encontraron servicios para la categoría con Id {IdCategoria}");
