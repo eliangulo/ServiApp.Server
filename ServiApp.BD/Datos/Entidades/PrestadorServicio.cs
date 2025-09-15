@@ -9,10 +9,10 @@ namespace ServiApp.BD.Datos.Entidades
    public class PrestadorServicio:EntityBase
    {
         //FK
-        public required int IdPrestador { get; set; }
+        public required int IDnumeroMatricula { get; set; }
         public Prestador? Prestador{ get; set; }
-        public required int IdServicio  { get; set; }
-        public Servico? Servicio { get; set; }
+        public required int IDServicio { get; set; }
+        public Servicio? Servicio { get; set; }
 
 
     }
