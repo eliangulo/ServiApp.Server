@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace ServiApp.Server.Components.Controles
 {
     [ApiController]
-    [Route("api/CategoriaServicioController")]
+    [Route("api/categoria")]
     public class CategoriaServicioController : ControllerBase
     {
         private readonly ICategoriaRepo<Categoria> categoriaRepo;

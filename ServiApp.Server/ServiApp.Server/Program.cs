@@ -21,7 +21,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IServicioRepo<Servicio>, ServicioRepo<Servicio>>();//repoServicio
 builder.Services.AddScoped<ICategoriaRepo<Categoria>, CategoriaRepo<Categoria>>();//repoCategoria
 
-
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7223/")
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
