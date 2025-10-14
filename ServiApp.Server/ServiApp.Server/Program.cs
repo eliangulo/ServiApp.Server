@@ -6,7 +6,7 @@ using ServiApp.Server.Client.Pages;
 using ServiApp.Server.Components;
 using ServiApp.Servicio.ServicioHTTP;
 
-// Configura el constructor del server y lo guardará en "builder"
+// Configura el constructor del server y lo guardarï¿½ en "builder"
 var builder = WebApplication.CreateBuilder(args);
 
 //region configura el Constructor de la aplicacion y sus servicios
@@ -34,10 +34,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-// Construimos nuestra aplicación
+// Construimos nuestra aplicaciï¿½n
 var app = builder.Build();
 
-// Aplicar migraciones automáticamente al iniciar la aplicación
+// Aplicar migraciones automï¿½ticamente al iniciar la aplicaciï¿½n
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();

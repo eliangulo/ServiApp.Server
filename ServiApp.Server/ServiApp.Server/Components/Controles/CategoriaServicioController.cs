@@ -36,6 +36,7 @@ namespace ServiApp.Server.Components.Controles
             }
 
             return Ok(lista);
+
             // Mapear a DTO
             var categoriasDTO = lista.Select(c => new CategoriaDTO
             {
@@ -51,7 +52,6 @@ namespace ServiApp.Server.Components.Controles
             }).ToList();
 
             return Ok(categoriasDTO);
-        
         }
 
         [HttpGet("{id}/servicio")]

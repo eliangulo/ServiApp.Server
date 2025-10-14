@@ -13,7 +13,5 @@ namespace ServiApp.BD.Datos.Entidades
         public Prestador? Prestador{ get; set; }
         public required int IDServicio { get; set; }
         public ServicioEnti? Servicio { get; set; }
-
-
     }
 }
