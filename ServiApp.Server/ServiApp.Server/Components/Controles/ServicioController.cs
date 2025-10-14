@@ -13,13 +13,35 @@ namespace ServiApp.Server.Components.Controles
     public class ServicioController : ControllerBase
     {
         private readonly AppDbContext context;
-        private readonly IServicioRepo<Servicio> servicioRepo;
+        private readonly IServicioRepo<ServicioEnti> servicioRepo;
 
         public ServicioController(AppDbContext context,
-                                 IServicioRepo<Servicio> servicioRepo)
+                                 IServicioRepo<ServicioEnti> servicioRepo)
         {
             this.context = context;
             this.servicioRepo = servicioRepo;
+        }
+        // GET: api/servicioController (OBTENER TODOS)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ServicioDTO>>> GetServicios()
+        {
+            var serviciosList = await servicioRepo.Select();
+            var servicios = serviciosList
+                .Select(s => new ServicioDTO
+                {
+                    Id = s.Id,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    NombrePrestador = s.NombrePrestador,
+                    Ubicacion = s.Ubicacion,
+                    PrecioBase = s.PrecioBase
+                })
+                .ToList();
+
+            if (!servicios.Any())
+                return NotFound("No se encontraron servicios");
+
+            return Ok(servicios);
         }
 
         // GET: api/servicio/categoria/3

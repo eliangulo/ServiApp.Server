@@ -1,11 +1,10 @@
 ﻿@page "/categorias"
-@inject HttpClient Http
+@inject IHttpServicio http
 <h3>Buscar por Categoria</h3>
 <table>
     <tr>
         <th>Id</th>
         <th>NombreCategoria</th>
-        
     </tr>
     @if (categorias == null)
     {
@@ -13,7 +12,7 @@
     }
     else if (categorias.Count == 0)
     {
-        <p>No se encontraron los servicios.</p>
+        <p>No se encontraron categorías.</p>
     }
     else
     {
@@ -21,25 +20,32 @@
         {
             <tr>
                 <td>@categoria.Id</td>
-                
+                <td>@categoria.NombreCategoria</td>
+                <td>@categoria.Descripcion</td>
             </tr>
         }
-    }  
+    }
 </table>
 
 @code {
     List<CategoriaDTO> categorias;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         await SeleccionarCategoria();
     }
+
     private async Task SeleccionarCategoria()
     {
-      
-       
-        categorias = await Http.GetFromJsonAsync<List<CategoriaDTO>>("api/categoria");
+        var response = await http.Get<List<CategoriaDTO>>("api/categoria");
+        if (!response.Error)
+        {
+            categorias = response.Respuesta;
+        }
+        else
+        {
+            categorias = new List<CategoriaDTO>();
+        }
     }
-
 }
-

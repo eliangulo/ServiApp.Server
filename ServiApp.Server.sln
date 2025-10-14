@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiApp.Server.Client", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiApp.Shared", "ServiApp.Shared\ServiApp.Shared.csproj", "{C6EE163E-DE3C-4A26-5A1E-05F49A8F90E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiApp.Servicio", "ServiApp.Servicio\ServiApp.Servicio.csproj", "{7C274AF5-3582-49B4-9C4A-98126A02312B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C6EE163E-DE3C-4A26-5A1E-05F49A8F90E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6EE163E-DE3C-4A26-5A1E-05F49A8F90E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6EE163E-DE3C-4A26-5A1E-05F49A8F90E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C274AF5-3582-49B4-9C4A-98126A02312B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C274AF5-3582-49B4-9C4A-98126A02312B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C274AF5-3582-49B4-9C4A-98126A02312B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C274AF5-3582-49B4-9C4A-98126A02312B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

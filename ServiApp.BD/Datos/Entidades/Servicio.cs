@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ServiApp.BD.Datos.Entidades
 {
-    public class Servicio : EntityBase
+    public class ServicioEnti : EntityBase
     {
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         public required string Nombre { get; set; }
@@ -18,7 +18,7 @@ namespace ServiApp.BD.Datos.Entidades
 
         [Required(ErrorMessage = "El campo Ubicacion es obligatorio")]
         [MaxLength(200, ErrorMessage = "El campo tiene como máximo 200 caracteres.")] // ajustado
-        public string Ubicacion { get; set; }
+        public string Ubicacion { get; set; } 
 
         public decimal PrecioBase { get; set; }
 

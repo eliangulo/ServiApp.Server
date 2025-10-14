@@ -22,8 +22,8 @@ namespace ServiApp.Server.Components.Controles
             this.categoriaRepo = categoriaRepo;
         }
 
-        [HttpGet] //api/categoria
-        public async Task<ActionResult<List<Categoria>>> GetListaCategoria()
+        [HttpGet] //api/categoria/listaCategoria
+        public async Task<ActionResult<List<CategoriaDTO>>> GetListaCategoria()
         {
             var lista = await categoriaRepo.Select();
             if (lista == null)
@@ -36,13 +36,29 @@ namespace ServiApp.Server.Components.Controles
             }
 
             return Ok(lista);
+            // Mapear a DTO
+            var categoriasDTO = lista.Select(c => new CategoriaDTO
+            {
+                Id = c.Id,
+                NombreCategoria = c.NombreCategoria,
+                Descripcion = c.Descripcion,
+                Servicios = c.ServicioEnti.Select(s => new ServicioDTO
+                {
+                    Id = s.Id,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                }).ToList()
+            }).ToList();
+
+            return Ok(categoriasDTO);
+        
         }
 
         [HttpGet("{id}/servicio")]
         public async Task<ActionResult<CategoriaDTO>> GetServicioPorCategoria(int id)
         {
             var categoria = await context.Categorias
-            .Include(c => c.Servicios)
+            .Include(c => c.ServicioEnti)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (categoria == null)
@@ -53,7 +69,7 @@ namespace ServiApp.Server.Components.Controles
                 Id = categoria.Id,
                 NombreCategoria = categoria.NombreCategoria,
                 Descripcion = categoria.Descripcion,
-                Servicios = categoria.Servicios.Select(s => new ServicioDTO
+                Servicios = categoria.ServicioEnti.Select(s => new ServicioDTO
                 {
                     Id = s.Id,
                     Nombre = s.Nombre,
