@@ -11,7 +11,7 @@ namespace ServiApp.BD.Datos
         // Tablas
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Solicitud> Solicitudes { get; set; }
-        public DbSet<Servicio> Servicios { get; set; }
+        public DbSet<ServicioEnti> Servicios { get; set; }
         public DbSet<Prestador> Prestadores { get; set; }
         public DbSet<Presupuesto> Presupuestos { get; set; }
         public DbSet<Pago> Pagos { get; set; }
@@ -28,9 +28,9 @@ namespace ServiApp.BD.Datos
             base.OnModelCreating(modelBuilder);
 
             // Relación: una Categoría tiene muchos Servicios
-            modelBuilder.Entity<Servicio>()
+            modelBuilder.Entity<ServicioEnti>()
                 .HasOne(s => s.Categoria)
-                .WithMany(c => c.Servicios)
+                .WithMany( c => c.ServicioEnti)
                 .HasForeignKey(s => s.IdCategoria);
 
             // Precargar categorías
@@ -42,8 +42,8 @@ namespace ServiApp.BD.Datos
             );
 
             // Precargar servicios
-            modelBuilder.Entity<Servicio>().HasData(
-                new Servicio
+            modelBuilder.Entity<ServicioEnti>().HasData(
+                new ServicioEnti
                 {
                     Id = 1,
                     Nombre = "Reparación de caños",
@@ -53,7 +53,7 @@ namespace ServiApp.BD.Datos
                     PrecioBase = 10,
                     IdCategoria = 1
                 },
-                new Servicio
+                new ServicioEnti
                 {
                     Id = 2,
                     Nombre = "Instalación de enchufes",

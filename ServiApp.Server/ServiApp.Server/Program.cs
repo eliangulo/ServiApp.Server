@@ -4,8 +4,9 @@ using ServiApp.BD.Datos.Entidades;
 using ServiApp.Repositorio.Repositorio;
 using ServiApp.Server.Client.Pages;
 using ServiApp.Server.Components;
+using ServiApp.Servicio.ServicioHTTP;
 
-// Configura el constructor del server y lo guardará en "builder"
+// Configura el constructor del server y lo guardarï¿½ en "builder"
 var builder = WebApplication.CreateBuilder(args);
 
 //region configura el Constructor de la aplicacion y sus servicios
@@ -18,20 +19,25 @@ var connectionString = builder.Configuration.GetConnectionString("ConnSqlServer"
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 //inyectamos el servicio generico
-builder.Services.AddScoped<IServicioRepo<Servicio>, ServicioRepo<Servicio>>();//repoServicio
+builder.Services.AddScoped<IServicioRepo<ServicioEnti>, ServicioRepo<ServicioEnti>>();//repoServicio
 builder.Services.AddScoped<ICategoriaRepo<Categoria>, CategoriaRepo<Categoria>>();//repoCategoria
 
+builder.Services.AddScoped<IHttpServicio, HttpServicio>();
 
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri("https://localhost:7223/")
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-// Construimos nuestra aplicación
+// Construimos nuestra aplicaciï¿½n
 var app = builder.Build();
 
-// Aplicar migraciones automáticamente al iniciar la aplicación
+// Aplicar migraciones automï¿½ticamente al iniciar la aplicaciï¿½n
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
