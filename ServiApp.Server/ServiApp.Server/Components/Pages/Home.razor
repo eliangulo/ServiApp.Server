@@ -1,7 +1,27 @@
 ﻿@page "/"
+@inject NavigationManager nav
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1>Bienvenido a Servi Click!</h1>
+        <p class="lead">Resolvemos lo que otros complican</p>
+        <p>Mira los servicios disponibles aquí...</p>
 
-Welcome to your new app.
+        <div class="filtros mb-3 mt-4">
+            <button type="button" class="btn btn-primary btn-lg" @onclick="IrAServicios">
+                Ver Servicios
+            </button>
+        </div>
+    </div>
+</div>
+
+@code
+{
+   private void IrAServicios ()
+   {
+     nav.NavigateTo("/servicios");
+   }
+}

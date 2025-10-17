@@ -1,45 +1,76 @@
 ﻿@page "/categorias"
 @inject IHttpServicio http
-<h3>Buscar por Categoria</h3>
-<table>
-    <tr>
-        <th>Id</th>
-        <th>NombreCategoria</th>
-    </tr>
-    @if (categorias == null)
-    {
-        <p>Buscando ...</p>
-    }
-    else if (categorias.Count == 0)
-    {
-        <p>No se encontraron categorías.</p>
-    }
-    else
-    {
-        @foreach (var categoria in categorias)
-        {
-            <tr>
-                <td>@categoria.Id</td>
-                <td>@categoria.NombreCategoria</td>
-                <td>@categoria.Descripcion</td>
-            </tr>
-        }
-    }
-</table>
+@inject NavigationManager nav
+@rendermode InteractiveServer
+
+<h3>Buscar por Categoría</h3>
+
+<div class="mb-3">
+    <button class="btn btn-secondary" @onclick="VolverAServicios">
+        ← Volver a Servicios
+    </button>
+</div>
+
+@if (categorias == null)
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p>Buscando categorías...</p>
+    </div>
+}
+else if (categorias.Count == 0)
+{
+    <div class="alert alert-warning" role="alert">
+        No se encontraron categorías.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre Categoría</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var categoria in categorias)
+                {
+                    <tr>
+                        <td>@categoria.Id</td>
+                        <td>@categoria.NombreCategoria</td>
+                        <td>@categoria.Descripcion</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                    @onclick="() => VerServiciosPorCategoria(categoria.Id)">
+                                Ver Servicios
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
 
 @code {
-    List<CategoriaDTO> categorias;
+    private List<CategoriaDTO>? categorias;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        await SeleccionarCategoria();
+        await CargarCategorias();
     }
 
-    private async Task SeleccionarCategoria()
+    private async Task CargarCategorias()
     {
         var response = await http.Get<List<CategoriaDTO>>("api/categoria");
-        if (!response.Error)
+        if (!response.Error && response.Respuesta != null)
         {
             categorias = response.Respuesta;
         }
@@ -47,5 +78,15 @@
         {
             categorias = new List<CategoriaDTO>();
         }
+    }
+
+    private void VerServiciosPorCategoria(int categoriaId)
+    {
+        nav.NavigateTo($"/servicios/categoria/{categoriaId}");
+    }
+
+    private void VolverAServicios()
+    {
+        nav.NavigateTo("/servicios");
     }
 }
