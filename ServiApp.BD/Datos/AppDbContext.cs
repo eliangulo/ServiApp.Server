@@ -30,7 +30,7 @@ namespace ServiApp.BD.Datos
             // Relación: una Categoría tiene muchos Servicios
             modelBuilder.Entity<ServicioEnti>()
                 .HasOne(s => s.Categoria)
-                .WithMany( c => c.ServicioEnti)
+                .WithMany(c => c.ServicioEnti)
                 .HasForeignKey(s => s.IdCategoria);
 
             // Precargar categorías
@@ -39,6 +39,37 @@ namespace ServiApp.BD.Datos
                 new Categoria { Id = 2, NombreCategoria = "Electricidad", Descripcion = "Instalaciones y reparaciones eléctricas" },
                 new Categoria { Id = 3, NombreCategoria = "Pintura", Descripcion = "Pintado de interiores y exteriores" },
                 new Categoria { Id = 4, NombreCategoria = "Limpieza", Descripcion = "Servicios de limpieza para el hogar y oficina" }
+            );
+
+            // Precargar prestadores
+            modelBuilder.Entity<Prestador>().HasData(
+                new Prestador
+                {
+                    Id = 1,
+                    IDnumberoMatricula = 12345,
+                    NombrePrestador = "Carlos",
+                    Apellido = "López",
+                    Email = "carlos.lopez@email.com",
+                    Password = "password123"
+                },
+                new Prestador
+                {
+                    Id = 2,
+                    IDnumberoMatricula = 67890,
+                    NombrePrestador = "María",
+                    Apellido = "Fernández",
+                    Email = "maria.fernandez@email.com",
+                    Password = "password123"
+                },
+                new Prestador
+                {
+                    Id = 3,
+                    IDnumberoMatricula = 11111,
+                    NombrePrestador = "Juan",
+                    Apellido = "Pérez",
+                    Email = "juan.perez@email.com",
+                    Password = "password123"
+                }
             );
 
             // Precargar servicios
@@ -62,6 +93,41 @@ namespace ServiApp.BD.Datos
                     Ubicacion = "Rosario",
                     PrecioBase = 20,
                     IdCategoria = 2
+                },
+                new ServicioEnti
+                {
+                    Id = 3,
+                    Nombre = "Destape de cañerías",
+                    Descripcion = "Limpieza y destape de desagües y cañerías",
+                    NombrePrestador = "Juan Pérez",
+                    Ubicacion = "Córdoba",
+                    PrecioBase = 15,
+                    IdCategoria = 1
+                }
+            );
+
+            // Precargar relaciones PrestadorServicio
+            modelBuilder.Entity<PrestadorServicio>().HasData(
+                new PrestadorServicio
+                {
+                    Id = 1,
+                    PrestadorId = 1,
+                    ServicioId = 1,
+                    FechaAsignacion = new DateTime(2024, 1, 1)
+                },
+                new PrestadorServicio
+                {
+                    Id = 2,
+                    PrestadorId = 2,
+                    ServicioId = 2,
+                    FechaAsignacion = new DateTime(2024, 1, 1)
+                },
+                new PrestadorServicio
+                {
+                    Id = 3,
+                    PrestadorId = 3,
+                    ServicioId = 3,
+                    FechaAsignacion = new DateTime(2024, 1, 1)
                 }
             );
         }

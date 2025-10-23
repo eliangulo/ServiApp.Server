@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ServiApp.BD.Migrations
 {
     /// <inheritdoc />
-    public partial class Ajustes : Migration
+    public partial class Inicio : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,9 +34,9 @@ namespace ServiApp.BD.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IDnumberoMatricula = table.Column<int>(type: "int", nullable: false),
-                    NombrePrestador = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Emial = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    NombrePrestador = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -179,10 +179,9 @@ namespace ServiApp.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IDnumeroMatricula = table.Column<int>(type: "int", nullable: false),
-                    PrestadorId = table.Column<int>(type: "int", nullable: true),
-                    IDServicio = table.Column<int>(type: "int", nullable: false),
-                    ServicioId = table.Column<int>(type: "int", nullable: true)
+                    PrestadorId = table.Column<int>(type: "int", nullable: false),
+                    ServicioId = table.Column<int>(type: "int", nullable: false),
+                    FechaAsignacion = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,12 +190,14 @@ namespace ServiApp.BD.Migrations
                         name: "FK_PrestadoresServicios_Prestadores_PrestadorId",
                         column: x => x.PrestadorId,
                         principalTable: "Prestadores",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PrestadoresServicios_Servicios_ServicioId",
                         column: x => x.ServicioId,
                         principalTable: "Servicios",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,12 +242,33 @@ namespace ServiApp.BD.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Prestadores",
+                columns: new[] { "Id", "Apellido", "Email", "IDnumberoMatricula", "NombrePrestador", "Password" },
+                values: new object[,]
+                {
+                    { 1, "López", "carlos.lopez@email.com", 12345, "Carlos", "password123" },
+                    { 2, "Fernández", "maria.fernandez@email.com", 67890, "María", "password123" },
+                    { 3, "Pérez", "juan.perez@email.com", 11111, "Juan", "password123" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Servicios",
                 columns: new[] { "Id", "Descripcion", "IdCategoria", "Nombre", "NombrePrestador", "PrecioBase", "Ubicacion" },
                 values: new object[,]
                 {
                     { 1, "Arreglo de pérdidas de agua y caños rotos", 1, "Reparación de caños", "Carlos López", 10m, "Buenos Aires" },
-                    { 2, "Colocación y reparación de enchufes eléctricos", 2, "Instalación de enchufes", "María Fernández", 20m, "Rosario" }
+                    { 2, "Colocación y reparación de enchufes eléctricos", 2, "Instalación de enchufes", "María Fernández", 20m, "Rosario" },
+                    { 3, "Limpieza y destape de desagües y cañerías", 1, "Destape de cañerías", "Juan Pérez", 15m, "Córdoba" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PrestadoresServicios",
+                columns: new[] { "Id", "FechaAsignacion", "PrestadorId", "ServicioId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 }
                 });
 
             migrationBuilder.CreateIndex(

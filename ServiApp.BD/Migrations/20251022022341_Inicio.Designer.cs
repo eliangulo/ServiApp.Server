@@ -12,8 +12,8 @@ using ServiApp.BD.Datos;
 namespace ServiApp.BD.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250910180606_Ajustes")]
-    partial class Ajustes
+    [Migration("20251022022341_Inicio")]
+    partial class Inicio
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,20 +176,21 @@ namespace ServiApp.BD.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Emial")
+                    b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("IDnumberoMatricula")
                         .HasColumnType("int");
 
                     b.Property<string>("NombrePrestador")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -199,6 +200,35 @@ namespace ServiApp.BD.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Prestadores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Apellido = "López",
+                            Email = "carlos.lopez@email.com",
+                            IDnumberoMatricula = 12345,
+                            NombrePrestador = "Carlos",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Apellido = "Fernández",
+                            Email = "maria.fernandez@email.com",
+                            IDnumberoMatricula = 67890,
+                            NombrePrestador = "María",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Apellido = "Pérez",
+                            Email = "juan.perez@email.com",
+                            IDnumberoMatricula = 11111,
+                            NombrePrestador = "Juan",
+                            Password = "password123"
+                        });
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.PrestadorServicio", b =>
@@ -209,16 +239,13 @@ namespace ServiApp.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IDServicio")
+                    b.Property<DateTime>("FechaAsignacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PrestadorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IDnumeroMatricula")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PrestadorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ServicioId")
+                    b.Property<int>("ServicioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -228,6 +255,29 @@ namespace ServiApp.BD.Migrations
                     b.HasIndex("ServicioId");
 
                     b.ToTable("PrestadoresServicios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FechaAsignacion = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 1,
+                            ServicioId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FechaAsignacion = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 2,
+                            ServicioId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FechaAsignacion = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 3,
+                            ServicioId = 3
+                        });
                 });
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Presupuesto", b =>
@@ -273,7 +323,7 @@ namespace ServiApp.BD.Migrations
                     b.ToTable("Presupuestos");
                 });
 
-            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.ServicioEnti", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -332,6 +382,16 @@ namespace ServiApp.BD.Migrations
                             NombrePrestador = "María Fernández",
                             PrecioBase = 20m,
                             Ubicacion = "Rosario"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Limpieza y destape de desagües y cañerías",
+                            IdCategoria = 1,
+                            Nombre = "Destape de cañerías",
+                            NombrePrestador = "Juan Pérez",
+                            PrecioBase = 15m,
+                            Ubicacion = "Córdoba"
                         });
                 });
 
@@ -450,12 +510,16 @@ namespace ServiApp.BD.Migrations
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.PrestadorServicio", b =>
                 {
                     b.HasOne("ServiApp.BD.Datos.Entidades.Prestador", "Prestador")
-                        .WithMany()
-                        .HasForeignKey("PrestadorId");
+                        .WithMany("PrestadorServicios")
+                        .HasForeignKey("PrestadorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("ServiApp.BD.Datos.Entidades.Servicio", "Servicio")
+                    b.HasOne("ServiApp.BD.Datos.Entidades.ServicioEnti", "Servicio")
                         .WithMany()
-                        .HasForeignKey("ServicioId");
+                        .HasForeignKey("ServicioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Prestador");
 
@@ -471,10 +535,10 @@ namespace ServiApp.BD.Migrations
                     b.Navigation("Prestador");
                 });
 
-            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Servicio", b =>
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.ServicioEnti", b =>
                 {
                     b.HasOne("ServiApp.BD.Datos.Entidades.Categoria", "Categoria")
-                        .WithMany("Servicios")
+                        .WithMany("ServicioEnti")
                         .HasForeignKey("IdCategoria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -484,7 +548,7 @@ namespace ServiApp.BD.Migrations
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Solicitud", b =>
                 {
-                    b.HasOne("ServiApp.BD.Datos.Entidades.Servicio", "Servicio")
+                    b.HasOne("ServiApp.BD.Datos.Entidades.ServicioEnti", "Servicio")
                         .WithMany()
                         .HasForeignKey("ServicioId");
 
@@ -499,7 +563,12 @@ namespace ServiApp.BD.Migrations
 
             modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Categoria", b =>
                 {
-                    b.Navigation("Servicios");
+                    b.Navigation("ServicioEnti");
+                });
+
+            modelBuilder.Entity("ServiApp.BD.Datos.Entidades.Prestador", b =>
+                {
+                    b.Navigation("PrestadorServicios");
                 });
 #pragma warning restore 612, 618
         }

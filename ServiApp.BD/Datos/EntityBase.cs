@@ -9,7 +9,7 @@ namespace ServiApp.BD.Datos
 {
     public class EntityBase : IEntityBase
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
        // public EstadoRegistro EstadoRegistro { get; set; }
     }
 
