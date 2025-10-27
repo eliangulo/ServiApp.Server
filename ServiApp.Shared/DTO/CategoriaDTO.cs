@@ -12,6 +12,6 @@ namespace ServiApp.Shared.DTO
         public string NombreCategoria { get; set; } = "";
 
         public string Descripcion { get; set; } = "";
-        public List<ServicioDTO> Servicios { get; set; }
+        public List<ServicioDTO> Servicios { get; set; } = [];
     }
 }

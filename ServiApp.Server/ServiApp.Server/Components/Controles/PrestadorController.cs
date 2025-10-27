@@ -96,7 +96,7 @@ namespace ServiApp.Server.Components.Controles
                 NombrePrestador = prestadorDTO.NombrePrestador,
                 Apellido = prestadorDTO.Apellido,
                 Email = prestadorDTO.Email,
-                Password = "defaultPassword123" // Deberías manejar esto de otra forma
+                Password = "defaultPassword123" 
             };
 
             var resultado = await prestadorRepo.Insert(prestador);
@@ -118,7 +118,7 @@ namespace ServiApp.Server.Components.Controles
                 NombrePrestador = prestadorDTO.NombrePrestador,
                 Apellido = prestadorDTO.Apellido,
                 Email = prestadorDTO.Email,
-                Password = "defaultPassword123" // Mantener password existente
+                Password = "defaultPassword123" 
             };
 
             var resultado = await prestadorRepo.Update(id, prestador);

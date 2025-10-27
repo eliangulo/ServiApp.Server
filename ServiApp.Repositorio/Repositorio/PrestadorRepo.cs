@@ -1,22 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiApp.BD.Datos;
 using ServiApp.BD.Datos.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ServiApp.Repositorio.Repositorio
 {
-    public class PrestadorRepo<E> : IPrestadorRepo<E> where E : class, IEntityBase
+    public class PrestadorRepo<E>(AppDbContext context) : IPrestadorRepo<E> where E : class, IEntityBase
     {
-        private readonly AppDbContext context;
-
-        public PrestadorRepo(AppDbContext context)
-        {
-            this.context = context;
-        }
-
         // Obtener todos los prestadores con sus servicios
         public async Task<List<E>> Select()
         {
@@ -26,10 +15,8 @@ namespace ServiApp.Repositorio.Repositorio
                     .Include(p => p.PrestadorServicios)
                         .ThenInclude(ps => ps.Servicio)
                     .ToListAsync();
-
-                return prestadores as List<E>;
+                return (prestadores as List<E>)!;
             }
-
             return await context.Set<E>().ToListAsync();
         }
 
@@ -42,14 +29,12 @@ namespace ServiApp.Repositorio.Repositorio
                     .Include(p => p.PrestadorServicios)
                         .ThenInclude(ps => ps.Servicio)
                     .FirstOrDefaultAsync(p => p.Id == id);
-
                 return prestador as E;
             }
-
             return await context.Set<E>().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        // MÉTODO CLAVE: Obtener prestadores por categoría
+        //Obtener prestadores por categoría
         public async Task<List<E>> SelectPorCategoria(int categoriaId)
         {
             if (typeof(E) == typeof(Prestador))
@@ -63,11 +48,9 @@ namespace ServiApp.Repositorio.Repositorio
                     .Select(ps => ps.Prestador)
                     .Distinct()
                     .ToListAsync();
-
-                return prestadores as List<E>;
+                return (prestadores as List<E>)!;
             }
-
-            return new List<E>();
+            return [];  
         }
 
         // Insertar prestador
