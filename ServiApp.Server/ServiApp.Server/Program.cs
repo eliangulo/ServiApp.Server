@@ -21,7 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //inyectamos el servicio generico
 builder.Services.AddScoped<IServicioRepo<ServicioEnti>, ServicioRepo<ServicioEnti>>();//repoServicio
 builder.Services.AddScoped<ICategoriaRepo<Categoria>, CategoriaRepo<Categoria>>();//repoCategoria
-
+builder.Services.AddScoped<IPrestadorRepo<Prestador>, PrestadorRepo<Prestador>>();
 builder.Services.AddScoped<IHttpServicio, HttpServicio>();
 
 builder.Services.AddScoped(sp => new HttpClient

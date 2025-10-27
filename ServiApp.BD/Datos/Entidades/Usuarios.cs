@@ -9,7 +9,7 @@ namespace ServiApp.BD.Datos.Entidades
 {
     public class Usuarios : EntityBase
     {
-        public required int idUsuario { get; set; }
+        public required int IdUsuario { get; set; }
 
         public required string Nombre { get; set; }
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]

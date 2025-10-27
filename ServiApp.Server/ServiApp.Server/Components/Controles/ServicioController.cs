@@ -7,21 +7,10 @@ using ServiApp.Repositorio.Repositorio;
 
 namespace ServiApp.Server.Components.Controles
 {
-
     [ApiController]
     [Route("api/servicioController")]
-    public class ServicioController : ControllerBase
+    public class ServicioController(IServicioRepo<ServicioEnti> servicioRepo) : ControllerBase
     {
-        private readonly AppDbContext context;
-        private readonly IServicioRepo<ServicioEnti> servicioRepo;
-
-        public ServicioController(AppDbContext context,
-                                 IServicioRepo<ServicioEnti> servicioRepo)
-        {
-            this.context = context;
-            this.servicioRepo = servicioRepo;
-        }
-
         // GET: api/servicioController (OBTENER TODOS)
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ServicioDTO>>> GetServicios()
@@ -39,19 +28,39 @@ namespace ServiApp.Server.Components.Controles
                 })
                 .ToList();
 
-            if (!servicios.Any())
+            if (servicios.Count == 0)
                 return NotFound("No se encontraron servicios");
 
             return Ok(servicios);
         }
 
-        // GET: api/servicio/categoria/3
-        [HttpGet("categoria/IdCategoria")]
+        // GET: api/servicioController/5 (OBTENER POR ID)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServicioDTO>> GetServicio(int id)
+        {
+            var servicio = await servicioRepo.SelectById(id);
+
+            if (servicio == null)
+                return NotFound($"No se encontró el servicio con Id {id}");
+
+            var servicioDTO = new ServicioDTO
+            {
+                Id = servicio.Id,
+                Nombre = servicio.Nombre,
+                Descripcion = servicio.Descripcion,
+                NombrePrestador = servicio.NombrePrestador,
+                Ubicacion = servicio.Ubicacion,
+                PrecioBase = servicio.PrecioBase
+            };
+
+            return Ok(servicioDTO);
+        }
+
+        // GET: api/servicioController/categoria/3
+        [HttpGet("categoria/{IdCategoria}")]
         public async Task<ActionResult<IEnumerable<ServicioDTO>>> GetServiciosPorCategoria(int IdCategoria)
         {
-            // Await the Task<List<Servicio>> before applying LINQ methods
             var serviciosList = await servicioRepo.Select();
-
             var servicios = serviciosList
                 .Where(s => s.IdCategoria == IdCategoria)
                 .Select(s => new ServicioDTO
@@ -65,11 +74,10 @@ namespace ServiApp.Server.Components.Controles
                 })
                 .ToList();
 
-            if (!servicios.Any())
+            if (servicios.Count == 0)
                 return NotFound($"No se encontraron servicios para la categoría con Id {IdCategoria}");
 
             return Ok(servicios);
         }
     }
 }
-

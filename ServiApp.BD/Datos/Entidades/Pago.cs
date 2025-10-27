@@ -22,7 +22,7 @@ namespace ServiApp.BD.Datos.Entidades
         //FK
         public required int IDnumeroMatricula { get; set; }
         public Prestador? Prestador { get; set; }
-        public required int IDdUsuario{ get; set; }
+        public required int IdUsuario{ get; set; }
         public Usuarios? Usuarios { get; set; }
 
     }

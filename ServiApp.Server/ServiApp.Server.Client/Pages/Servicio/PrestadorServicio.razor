@@ -1,0 +1,130 @@
+﻿@page "/prestador/servicios/{PrestadorId:int}"
+@inject IHttpServicio http
+@inject NavigationManager nav
+@rendermode InteractiveServer
+
+<PageTitle>Servicios del Prestador</PageTitle>
+<link rel="stylesheet" href="css/servicios.css" />
+
+<div class="page-background"></div>
+<div class="container position-relative" style="z-index: 2; padding-top: 2rem; padding-bottom: 2rem;">
+
+    @if (cargando)
+    {
+        <div class="text-center mt-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+            <p class="mt-2">Cargando información...</p>
+        </div>
+    }
+    else if (prestador == null)
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> No se pudo cargar la información del prestador.
+            <div class="mt-3">
+                <button class="btn btn-primary" @onclick="Volver">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="mb-4">
+            <button class="btn btn-outline-secondary" @onclick="Volver">
+                <i class="bi bi-arrow-left"></i> Volver
+            </button>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-person-badge"></i> @prestador.NombrePrestador @prestador.Apellido
+                </h4>
+            </div>
+            <div class="card-body">
+                <p class="mb-1"><strong>Matrícula:</strong> @prestador.IDnumberoMatricula</p>
+                <p class="mb-0"><strong>Email:</strong> @prestador.Email</p>
+            </div>
+        </div>
+
+        <h5 class="mb-3 text-primary fw-bold">Servicios Disponibles</h5>
+
+        @if (prestador.Servicios == null || prestador.Servicios.Count == 0)
+        {
+            <div class="alert alert-info" role="alert">
+                Este prestador no tiene servicios disponibles en este momento.
+            </div>
+        }
+        else
+        {
+            <div class="list-group">
+                @foreach (var servicio in prestador.Servicios)
+                {
+                    <div class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <h5 class="mb-1 fw-semibold">@servicio.Nombre</h5>
+                            <small class="text-success fw-bold">
+                                $@servicio.PrecioBase
+                            </small>
+                        </div>
+                        <p class="mb-1 text-muted">@servicio.Descripcion</p>
+                        <div class="mt-3">
+                            <button class="btn btn-success btn-sm"
+                                    style="padding: 6px 20px; font-size: 0.9rem; border-radius: 5px;"
+                                    @onclick="() => ContactarServicio(servicio.Id)">
+                                <i class="bi bi-envelope me-1"></i>Contactar
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int PrestadorId { get; set; }
+
+    private PrestadorDTO? prestador;
+    private bool cargando = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CargarPrestador();
+    }
+
+    private async Task CargarPrestador()
+    {
+        cargando = true;
+        try
+        {
+            var response = await http.Get<PrestadorDTO>($"api/prestador/{PrestadorId}");
+
+            if (!response.Error && response.Respuesta != null)
+            {
+                prestador = response.Respuesta;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar prestador: {ex.Message}");
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+
+    private void ContactarServicio(int servicioId)
+    {
+        nav.NavigateTo($"/contactar/{servicioId}");
+    }
+
+    private void Volver()
+    {
+        nav.NavigateTo("/categorias");
+    }
+}

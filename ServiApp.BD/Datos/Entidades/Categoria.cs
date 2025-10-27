@@ -11,8 +11,7 @@ namespace ServiApp.BD.Datos.Entidades
         public required string NombreCategoria { get; set; }
         [Required(ErrorMessage = "El campo nombre categoria es obligatorio")]
         public required string Descripcion { get; set; }
-       
-        public ICollection<ServicioEnti> ServicioEnti { get; set; } = new List<ServicioEnti>();
+        public ICollection<ServicioEnti> ServicioEnti { get; set; } = [];
     }
 
 }
