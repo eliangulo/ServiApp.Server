@@ -9,16 +9,16 @@ namespace ServiApp.BD.Datos.Entidades
         public required string Nombre { get; set; }
 
         [Required(ErrorMessage = "El campo Descripcion es obligatorio")]
-        [MaxLength(500, ErrorMessage = "El campo tiene como máximo 500 caracteres.")] // aumento para que no trunque
+        [MaxLength(500, ErrorMessage = "El campo tiene como máximo 500 caracteres.")] 
         public required string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El campo NombrePrestador es obligatorio")]
-        [MaxLength(200, ErrorMessage = "El campo tiene como máximo 200 caracteres.")] // ajustado
+        [MaxLength(200, ErrorMessage = "El campo tiene como máximo 200 caracteres.")] 
         public required string NombrePrestador { get; set; }
 
         [Required(ErrorMessage = "El campo Ubicacion es obligatorio")]
-        [MaxLength(200, ErrorMessage = "El campo tiene como máximo 200 caracteres.")] // ajustado
-        public string Ubicacion { get; set; } 
+        [MaxLength(200, ErrorMessage = "El campo tiene como máximo 200 caracteres.")] 
+        public required string Ubicacion { get; set; } 
 
         public decimal PrecioBase { get; set; }
 

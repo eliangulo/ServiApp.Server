@@ -45,6 +45,9 @@ namespace ServiApp.BD.Migrations
                     b.Property<int>("IDnumberoMatricula")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PrestadorId")
                         .HasColumnType("int");
 
@@ -52,9 +55,6 @@ namespace ServiApp.BD.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("UsuariosId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("idUsuario")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -90,19 +90,19 @@ namespace ServiApp.BD.Migrations
                         new
                         {
                             Id = 1,
-                            Descripcion = "Servicios de cañerías y grifos",
+                            Descripcion = "Reparacion de caños, grifos, desagues y sanitarios.",
                             NombreCategoria = "Plomería"
                         },
                         new
                         {
                             Id = 2,
-                            Descripcion = "Instalaciones y reparaciones eléctricas",
+                            Descripcion = "Instalaciones, reparacion y mantenimiento de sistemas electricos, enchufes, iluminacion y tableros eléctricas.",
                             NombreCategoria = "Electricidad"
                         },
                         new
                         {
                             Id = 3,
-                            Descripcion = "Pintado de interiores y exteriores",
+                            Descripcion = "Pintado de interiores y exteriores, reparacion de paredes.",
                             NombreCategoria = "Pintura"
                         },
                         new
@@ -110,6 +110,30 @@ namespace ServiApp.BD.Migrations
                             Id = 4,
                             Descripcion = "Servicios de limpieza para el hogar y oficina",
                             NombreCategoria = "Limpieza"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descripcion = "Servicio de cuidado de niños y adultos mayores",
+                            NombreCategoria = "Niñera"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Descripcion = "Instalacion y mantenimiento de artefactos de gas y deteccion de fugas.",
+                            NombreCategoria = "Gasista"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Descripcion = "Construccion, refaccion y reparacion de paredes, pisos,techos y estructuras",
+                            NombreCategoria = "Albañileria"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Descripcion = "Apertura de cerraduras, duplicado de llaves.",
+                            NombreCategoria = "Cerrajeria"
                         });
                 });
 
@@ -135,10 +159,10 @@ namespace ServiApp.BD.Migrations
                     b.Property<int>("IDPago")
                         .HasColumnType("int");
 
-                    b.Property<int>("IDdUsuario")
+                    b.Property<int>("IDnumeroMatricula")
                         .HasColumnType("int");
 
-                    b.Property<int>("IDnumeroMatricula")
+                    b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
                     b.Property<string>("MetodoPago")
@@ -181,7 +205,7 @@ namespace ServiApp.BD.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("IDnumberoMatricula")
+                    b.Property<int>("IdNumberoMatricula")
                         .HasColumnType("int");
 
                     b.Property<string>("NombrePrestador")
@@ -204,7 +228,7 @@ namespace ServiApp.BD.Migrations
                             Id = 1,
                             Apellido = "López",
                             Email = "carlos.lopez@email.com",
-                            IDnumberoMatricula = 12345,
+                            IdNumberoMatricula = 12345,
                             NombrePrestador = "Carlos",
                             Password = "password123"
                         },
@@ -213,7 +237,7 @@ namespace ServiApp.BD.Migrations
                             Id = 2,
                             Apellido = "Fernández",
                             Email = "maria.fernandez@email.com",
-                            IDnumberoMatricula = 67890,
+                            IdNumberoMatricula = 67890,
                             NombrePrestador = "María",
                             Password = "password123"
                         },
@@ -222,8 +246,71 @@ namespace ServiApp.BD.Migrations
                             Id = 3,
                             Apellido = "Pérez",
                             Email = "juan.perez@email.com",
-                            IDnumberoMatricula = 11111,
+                            IdNumberoMatricula = 11111,
                             NombrePrestador = "Juan",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Apellido = "González",
+                            Email = "ana.gonzalez@email.com",
+                            IdNumberoMatricula = 22222,
+                            NombrePrestador = "Ana",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Apellido = "Martínez",
+                            Email = "roberto.martinez@email.com",
+                            IdNumberoMatricula = 33333,
+                            NombrePrestador = "Roberto",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Apellido = "Rodríguez",
+                            Email = "laura.rodriguez@email.com",
+                            IdNumberoMatricula = 44444,
+                            NombrePrestador = "Laura",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Apellido = "Sánchez",
+                            Email = "diego.sanchez@email.com",
+                            IdNumberoMatricula = 55555,
+                            NombrePrestador = "Diego",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Apellido = "Torres",
+                            Email = "valeria.torres@email.com",
+                            IdNumberoMatricula = 66666,
+                            NombrePrestador = "Valeria",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Apellido = "Romero",
+                            Email = "martin.romero@email.com",
+                            IdNumberoMatricula = 77777,
+                            NombrePrestador = "Martín",
+                            Password = "password123"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Apellido = "Morales",
+                            Email = "claudia.morales@email.com",
+                            IdNumberoMatricula = 88888,
+                            NombrePrestador = "Claudia",
                             Password = "password123"
                         });
                 });
@@ -274,6 +361,55 @@ namespace ServiApp.BD.Migrations
                             FechaAsignacion = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PrestadorId = 3,
                             ServicioId = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FechaAsignacion = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 4,
+                            ServicioId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FechaAsignacion = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 5,
+                            ServicioId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FechaAsignacion = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 6,
+                            ServicioId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FechaAsignacion = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 7,
+                            ServicioId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FechaAsignacion = new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 8,
+                            ServicioId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FechaAsignacion = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 9,
+                            ServicioId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FechaAsignacion = new DateTime(2024, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PrestadorId = 10,
+                            ServicioId = 10
                         });
                 });
 
@@ -285,6 +421,11 @@ namespace ServiApp.BD.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Detalle_materiales")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.Property<DateTime>("FechaCreacion")
                         .HasMaxLength(100)
                         .HasColumnType("datetime2");
@@ -292,10 +433,10 @@ namespace ServiApp.BD.Migrations
                     b.Property<DateTime>("FechaVto")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IDnumeroMatricula")
+                    b.Property<int>("IDpresupuesto")
                         .HasColumnType("int");
 
-                    b.Property<int>("IDpresupuesto")
+                    b.Property<int>("IdNumberoMatricula")
                         .HasColumnType("int");
 
                     b.Property<int>("Monto")
@@ -304,12 +445,7 @@ namespace ServiApp.BD.Migrations
                     b.Property<int?>("PrestadorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("detalle_materiales")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<int>("tiempoDuracion")
+                    b.Property<int>("TiempoDuracion")
                         .HasMaxLength(42)
                         .HasColumnType("int");
 
@@ -389,6 +525,76 @@ namespace ServiApp.BD.Migrations
                             NombrePrestador = "Juan Pérez",
                             PrecioBase = 15m,
                             Ubicacion = "Córdoba"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descripcion = "Pintura profesional de ambientes interiores",
+                            IdCategoria = 3,
+                            Nombre = "Pintura de interiores",
+                            NombrePrestador = "Ana González",
+                            PrecioBase = 25m,
+                            Ubicacion = "Buenos Aires"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Descripcion = "Limpieza completa de hogar u oficina",
+                            IdCategoria = 4,
+                            Nombre = "Limpieza profunda",
+                            NombrePrestador = "Roberto Martínez",
+                            PrecioBase = 18m,
+                            Ubicacion = "La Plata"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Descripcion = "Servicio de niñera con experiencia",
+                            IdCategoria = 5,
+                            Nombre = "Cuidado de niños",
+                            NombrePrestador = "Laura Rodríguez",
+                            PrecioBase = 12m,
+                            Ubicacion = "Buenos Aires"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Descripcion = "Instalación segura de artefactos a gas",
+                            IdCategoria = 6,
+                            Nombre = "Instalación de gas",
+                            NombrePrestador = "Diego Sánchez",
+                            PrecioBase = 30m,
+                            Ubicacion = "Rosario"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Descripcion = "Reparación y construcción de paredes",
+                            IdCategoria = 7,
+                            Nombre = "Refacción de paredes",
+                            NombrePrestador = "Valeria Torres",
+                            PrecioBase = 28m,
+                            Ubicacion = "Córdoba"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Descripcion = "Servicio de cerrajería 24 horas",
+                            IdCategoria = 8,
+                            Nombre = "Apertura de cerraduras",
+                            NombrePrestador = "Martín Romero",
+                            PrecioBase = 22m,
+                            Ubicacion = "Mendoza"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Descripcion = "Revisión y mantenimiento preventivo de instalaciones eléctricas",
+                            IdCategoria = 2,
+                            Nombre = "Mantenimiento eléctrico",
+                            NombrePrestador = "Claudia Morales",
+                            PrecioBase = 24m,
+                            Ubicacion = "Buenos Aires"
                         });
                 });
 
@@ -399,6 +605,10 @@ namespace ServiApp.BD.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Estado")
                         .HasMaxLength(100)
@@ -421,10 +631,6 @@ namespace ServiApp.BD.Migrations
 
                     b.Property<int?>("UsuariosId")
                         .HasColumnType("int");
-
-                    b.Property<string>("descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -457,6 +663,9 @@ namespace ServiApp.BD.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -465,9 +674,6 @@ namespace ServiApp.BD.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("idUsuario")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -9,7 +9,7 @@ namespace ServiApp.BD.Datos.Entidades
 {
     public class Presupuesto : EntityBase
     {
-        public required int IDnumeroMatricula { get; set; }
+        public required int IdNumberoMatricula { get; set; }
         public Prestador? Prestador { get; set; }  //fk
 
         public required int IDpresupuesto  { get; set; }
@@ -18,10 +18,10 @@ namespace ServiApp.BD.Datos.Entidades
         [Required(ErrorMessage = "El campo Monto es obligatorio")]
         [MaxLength(42, ErrorMessage = "El campo tiene como máximo 42 caracteres.")]
 
-        public required int tiempoDuracion { get; set; } //dias estimado
+        public required int TiempoDuracion { get; set; } //dias estimado
         [Required(ErrorMessage = "El campo es obligatorio")]
         [MaxLength(30, ErrorMessage = "El campo tiene como máximo 30 caracteres.")]
-        public required string detalle_materiales { get; set; }
+        public required string Detalle_materiales { get; set; }
         [Required(ErrorMessage = "El campo es obligatorio")]
         [MaxLength(100, ErrorMessage = "El campo tiene como máximo 100 caracteres.")]
         

@@ -2,17 +2,12 @@
 @inject IHttpServicio http
 @inject NavigationManager nav
 @rendermode InteractiveServer
-
 <PageTitle>Servicios Disponibles</PageTitle>
 <link rel="stylesheet" href="css/servicios.css" />
 <div class="page-background"></div>
-
 <div class="container mt-4 position-relative" style="z-index: 2; padding-bottom: 2rem;">
     <h3 class="mb-4 text-primary fw-bold">Servicios Disponibles</h3>
     <div class="filtros mb-4">
-        <button class="btn btn-outline-primary me-2" @onclick="MostrarTodos">
-            <i class="bi bi-list-ul"></i> Mostrar Todos
-        </button>
         <button class="btn btn-outline-secondary" @onclick="IrABuscarPorCategoria">
             <i class="bi bi-search"></i> Buscar por Categoría
         </button>
@@ -37,9 +32,7 @@
         <div class="list-group">
             @foreach (var servicio in servicios)
             {
-                <a href="#" class="list-group-item list-group-item-action"
-                   @onclick="() => SeleccionarServicio(servicio.Id)"
-                @onclick:preventDefault>
+                <div class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between align-items-center">
                         <h5 class="mb-1 fw-semibold">@servicio.Nombre</h5>
                         <small class="text-success fw-bold">
@@ -55,17 +48,26 @@
                             <i class="bi bi-geo-alt"></i> @servicio.Ubicacion
                         </small>
                     </div>
-                </a>
+                    <div class="mt-3">
+                        <button class="btn btn-success btn-sm"
+                                style="padding: 6px 20px; font-size: 0.9rem; border-radius: 5px;"
+                                @onclick="() => ContactarPrestador(servicio.Id)">
+                            <i class="bi bi-envelope me-1"></i>Contactar
+                        </button>
+                    </div>
+                </div>
             }
         </div>
     }
 </div>
 @code {
     private List<ServicioDTO>? servicios;
+
     protected override async Task OnInitializedAsync()
     {
         await CargarServicios();
     }
+
     private async Task CargarServicios()
     {
         var response = await http.Get<List<ServicioDTO>>("api/servicioController");
@@ -73,17 +75,20 @@
             ? response.Respuesta
             : new List<ServicioDTO>();
     }
+
     private async Task MostrarTodos()
     {
-        servicios = null; // Para mostrar el spinner
+        servicios = null;
         await CargarServicios();
     }
+
     private void IrABuscarPorCategoria()
     {
         nav.NavigateTo("/categorias");
     }
-    private void SeleccionarServicio(int servicioId)
+
+    private void ContactarPrestador(int servicioId)
     {
-        nav.NavigateTo($"/servicio/{servicioId}");
+        nav.NavigateTo($"/contactar/{servicioId}");
     }
 }

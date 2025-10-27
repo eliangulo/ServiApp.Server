@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,10 +11,22 @@
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet />
 </head>
-
 <body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
+    <script>
+        document.addEventListener('click', function(e) {
+            // Si se hace click en un link del nav y estamos en móvil
+            if (e.target.closest('.nav-scrollable .nav-link') && window.innerWidth < 641) {
+                const toggle = document.getElementById('navbar-toggle');
+                if (toggle && toggle.checked) {
+                    // Pequeño delay para que la navegación se complete primero
+                    setTimeout(() => {
+                        toggle.checked = false;
+                    }, 100);
+                }
+            }
+        });
+    </script>
 </body>
-
 </html>

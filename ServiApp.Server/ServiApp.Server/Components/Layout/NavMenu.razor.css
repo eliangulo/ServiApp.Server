@@ -103,3 +103,14 @@
         overflow-y: auto;
     }
 }
+/* Forzar que los links sean clickeables */
+.nav-item .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-scrollable {
+    pointer-events: auto !important;
+}

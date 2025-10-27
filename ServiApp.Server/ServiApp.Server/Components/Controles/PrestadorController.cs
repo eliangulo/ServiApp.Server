@@ -2,36 +2,26 @@
 using ServiApp.BD.Datos.Entidades;
 using ServiApp.Repositorio.Repositorio;
 using ServiApp.Shared.DTO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ServiApp.Server.Components.Controles
 {
     [ApiController]
     [Route("api/prestador")]
-    public class PrestadorController : ControllerBase
+    public class PrestadorController(IPrestadorRepo<Prestador> prestadorRepo) : ControllerBase
     {
-        private readonly IPrestadorRepo<Prestador> prestadorRepo;
-
-        public PrestadorController(IPrestadorRepo<Prestador> prestadorRepo)
-        {
-            this.prestadorRepo = prestadorRepo;
-        }
-
         // GET: api/prestador
         [HttpGet]
         public async Task<ActionResult<List<PrestadorDTO>>> GetPrestadores()
         {
             var prestadoresList = await prestadorRepo.Select();
 
-            if (prestadoresList == null || !prestadoresList.Any())
+            if (prestadoresList == null || prestadoresList.Count == 0)
                 return NotFound("No se encontraron prestadores");
 
             var prestadoresDTO = prestadoresList.Select(p => new PrestadorDTO
             {
                 Id = p.Id,
-                IDnumberoMatricula = p.IDnumberoMatricula,
+                IDnumberoMatricula = p.IdNumberoMatricula,
                 NombrePrestador = p.NombrePrestador,
                 Apellido = p.Apellido,
                 Email = p.Email,
@@ -59,7 +49,7 @@ namespace ServiApp.Server.Components.Controles
             var prestadorDTO = new PrestadorDTO
             {
                 Id = prestador.Id,
-                IDnumberoMatricula = prestador.IDnumberoMatricula,
+                IDnumberoMatricula = prestador.IdNumberoMatricula,
                 NombrePrestador = prestador.NombrePrestador,
                 Apellido = prestador.Apellido,
                 Email = prestador.Email,
@@ -81,13 +71,13 @@ namespace ServiApp.Server.Components.Controles
         {
             var prestadoresList = await prestadorRepo.SelectPorCategoria(categoriaId);
 
-            if (prestadoresList == null || !prestadoresList.Any())
+            if (prestadoresList == null || prestadoresList.Count == 0)
                 return NotFound($"No se encontraron prestadores para la categoría con Id {categoriaId}");
 
             var prestadoresDTO = prestadoresList.Select(p => new PrestadorDTO
             {
                 Id = p.Id,
-                IDnumberoMatricula = p.IDnumberoMatricula,
+                IDnumberoMatricula = p.IdNumberoMatricula,
                 NombrePrestador = p.NombrePrestador,
                 Apellido = p.Apellido,
                 Email = p.Email
@@ -102,7 +92,7 @@ namespace ServiApp.Server.Components.Controles
         {
             var prestador = new Prestador
             {
-                IDnumberoMatricula = prestadorDTO.IDnumberoMatricula,
+                IdNumberoMatricula = prestadorDTO.IDnumberoMatricula,
                 NombrePrestador = prestadorDTO.NombrePrestador,
                 Apellido = prestadorDTO.Apellido,
                 Email = prestadorDTO.Email,
@@ -124,7 +114,7 @@ namespace ServiApp.Server.Components.Controles
             var prestador = new Prestador
             {
                 Id = id,
-                IDnumberoMatricula = prestadorDTO.IDnumberoMatricula,
+                IdNumberoMatricula = prestadorDTO.IDnumberoMatricula,
                 NombrePrestador = prestadorDTO.NombrePrestador,
                 Apellido = prestadorDTO.Apellido,
                 Email = prestadorDTO.Email,

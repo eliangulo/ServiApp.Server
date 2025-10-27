@@ -6,7 +6,7 @@ namespace ServiApp.BD.Datos.Entidades
 {
     public class Prestador : EntityBase
     {
-        public required int IDnumberoMatricula { get; set; }
+        public required int IdNumberoMatricula { get; set; }
 
         [Required(ErrorMessage = "El campo Nombre es obligatorio")]
         [MaxLength(50, ErrorMessage = "El campo tiene como máximo 50 caracteres.")]
@@ -24,6 +24,6 @@ namespace ServiApp.BD.Datos.Entidades
         [MaxLength(100, ErrorMessage = "El campo tiene como máximo 100 caracteres.")]
         public required string Password { get; set; }
 
-        public List<PrestadorServicio> PrestadorServicios { get; set; } = new();
+        public List<PrestadorServicio> PrestadorServicios { get; set; } = [];
     }
 }

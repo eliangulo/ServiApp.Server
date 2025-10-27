@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiApp.BD.Datos;
+using ServiApp.BD.Datos.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace ServiApp.Repositorio.Repositorio
         {
             return await context.Set<E>().FindAsync(id);
         }
+    
 
     }
 }

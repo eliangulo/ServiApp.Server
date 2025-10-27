@@ -33,7 +33,7 @@ namespace ServiApp.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IDnumberoMatricula = table.Column<int>(type: "int", nullable: false),
+                    IdNumberoMatricula = table.Column<int>(type: "int", nullable: false),
                     NombrePrestador = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -50,7 +50,7 @@ namespace ServiApp.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    idUsuario = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(42)", maxLength: 42, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(42)", maxLength: 42, nullable: false),
@@ -92,12 +92,12 @@ namespace ServiApp.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IDnumeroMatricula = table.Column<int>(type: "int", nullable: false),
+                    IdNumberoMatricula = table.Column<int>(type: "int", nullable: false),
                     PrestadorId = table.Column<int>(type: "int", nullable: true),
                     IDpresupuesto = table.Column<int>(type: "int", nullable: false),
                     Monto = table.Column<int>(type: "int", nullable: false),
-                    tiempoDuracion = table.Column<int>(type: "int", maxLength: 42, nullable: false),
-                    detalle_materiales = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    TiempoDuracion = table.Column<int>(type: "int", maxLength: 42, nullable: false),
+                    Detalle_materiales = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", maxLength: 100, nullable: false),
                     FechaVto = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -117,7 +117,7 @@ namespace ServiApp.BD.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    idUsuario = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
                     UsuariosId = table.Column<int>(type: "int", nullable: true),
                     IDnumberoMatricula = table.Column<int>(type: "int", nullable: false),
                     PrestadorId = table.Column<int>(type: "int", nullable: true),
@@ -155,7 +155,7 @@ namespace ServiApp.BD.Migrations
                     FechaPago = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IDnumeroMatricula = table.Column<int>(type: "int", nullable: false),
                     PrestadorId = table.Column<int>(type: "int", nullable: true),
-                    IDdUsuario = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false),
                     UsuariosId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -211,7 +211,7 @@ namespace ServiApp.BD.Migrations
                     IdServicio = table.Column<int>(type: "int", nullable: false),
                     ServicioId = table.Column<int>(type: "int", nullable: true),
                     IDSolicitud = table.Column<int>(type: "int", nullable: false),
-                    descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<bool>(type: "bit", maxLength: 100, nullable: false),
                     Fecha_solicitud = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -235,20 +235,31 @@ namespace ServiApp.BD.Migrations
                 columns: new[] { "Id", "Descripcion", "NombreCategoria" },
                 values: new object[,]
                 {
-                    { 1, "Servicios de cañerías y grifos", "Plomería" },
-                    { 2, "Instalaciones y reparaciones eléctricas", "Electricidad" },
-                    { 3, "Pintado de interiores y exteriores", "Pintura" },
-                    { 4, "Servicios de limpieza para el hogar y oficina", "Limpieza" }
+                    { 1, "Reparacion de caños, grifos, desagues y sanitarios.", "Plomería" },
+                    { 2, "Instalaciones, reparacion y mantenimiento de sistemas electricos, enchufes, iluminacion y tableros eléctricas.", "Electricidad" },
+                    { 3, "Pintado de interiores y exteriores, reparacion de paredes.", "Pintura" },
+                    { 4, "Servicios de limpieza para el hogar y oficina", "Limpieza" },
+                    { 5, "Servicio de cuidado de niños y adultos mayores", "Niñera" },
+                    { 6, "Instalacion y mantenimiento de artefactos de gas y deteccion de fugas.", "Gasista" },
+                    { 7, "Construccion, refaccion y reparacion de paredes, pisos,techos y estructuras", "Albañileria" },
+                    { 8, "Apertura de cerraduras, duplicado de llaves.", "Cerrajeria" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Prestadores",
-                columns: new[] { "Id", "Apellido", "Email", "IDnumberoMatricula", "NombrePrestador", "Password" },
+                columns: new[] { "Id", "Apellido", "Email", "IdNumberoMatricula", "NombrePrestador", "Password" },
                 values: new object[,]
                 {
                     { 1, "López", "carlos.lopez@email.com", 12345, "Carlos", "password123" },
                     { 2, "Fernández", "maria.fernandez@email.com", 67890, "María", "password123" },
-                    { 3, "Pérez", "juan.perez@email.com", 11111, "Juan", "password123" }
+                    { 3, "Pérez", "juan.perez@email.com", 11111, "Juan", "password123" },
+                    { 4, "González", "ana.gonzalez@email.com", 22222, "Ana", "password123" },
+                    { 5, "Martínez", "roberto.martinez@email.com", 33333, "Roberto", "password123" },
+                    { 6, "Rodríguez", "laura.rodriguez@email.com", 44444, "Laura", "password123" },
+                    { 7, "Sánchez", "diego.sanchez@email.com", 55555, "Diego", "password123" },
+                    { 8, "Torres", "valeria.torres@email.com", 66666, "Valeria", "password123" },
+                    { 9, "Romero", "martin.romero@email.com", 77777, "Martín", "password123" },
+                    { 10, "Morales", "claudia.morales@email.com", 88888, "Claudia", "password123" }
                 });
 
             migrationBuilder.InsertData(
@@ -258,7 +269,14 @@ namespace ServiApp.BD.Migrations
                 {
                     { 1, "Arreglo de pérdidas de agua y caños rotos", 1, "Reparación de caños", "Carlos López", 10m, "Buenos Aires" },
                     { 2, "Colocación y reparación de enchufes eléctricos", 2, "Instalación de enchufes", "María Fernández", 20m, "Rosario" },
-                    { 3, "Limpieza y destape de desagües y cañerías", 1, "Destape de cañerías", "Juan Pérez", 15m, "Córdoba" }
+                    { 3, "Limpieza y destape de desagües y cañerías", 1, "Destape de cañerías", "Juan Pérez", 15m, "Córdoba" },
+                    { 4, "Pintura profesional de ambientes interiores", 3, "Pintura de interiores", "Ana González", 25m, "Buenos Aires" },
+                    { 5, "Limpieza completa de hogar u oficina", 4, "Limpieza profunda", "Roberto Martínez", 18m, "La Plata" },
+                    { 6, "Servicio de niñera con experiencia", 5, "Cuidado de niños", "Laura Rodríguez", 12m, "Buenos Aires" },
+                    { 7, "Instalación segura de artefactos a gas", 6, "Instalación de gas", "Diego Sánchez", 30m, "Rosario" },
+                    { 8, "Reparación y construcción de paredes", 7, "Refacción de paredes", "Valeria Torres", 28m, "Córdoba" },
+                    { 9, "Servicio de cerrajería 24 horas", 8, "Apertura de cerraduras", "Martín Romero", 22m, "Mendoza" },
+                    { 10, "Revisión y mantenimiento preventivo de instalaciones eléctricas", 2, "Mantenimiento eléctrico", "Claudia Morales", 24m, "Buenos Aires" }
                 });
 
             migrationBuilder.InsertData(
@@ -268,7 +286,14 @@ namespace ServiApp.BD.Migrations
                 {
                     { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1 },
                     { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 2 },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 }
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 3 },
+                    { 4, new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 4 },
+                    { 5, new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5 },
+                    { 6, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, 6 },
+                    { 7, new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 7, 7 },
+                    { 8, new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 8, 8 },
+                    { 9, new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 9, 9 },
+                    { 10, new DateTime(2024, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 10, 10 }
                 });
 
             migrationBuilder.CreateIndex(
